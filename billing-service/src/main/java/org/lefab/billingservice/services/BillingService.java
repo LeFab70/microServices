@@ -3,9 +3,12 @@ package org.lefab.billingservice.services;
 import lombok.RequiredArgsConstructor;
 
 import org.lefab.billingservice.dtos.BillResponseDto;
+import org.lefab.billingservice.entities.BillEntity;
 import org.lefab.billingservice.feign.CustomerRestClient;
 import org.lefab.billingservice.feign.ProductItemRestClient;
 import org.lefab.billingservice.mappers.BillingMapper;
+import org.lefab.billingservice.model.Customer;
+import org.lefab.billingservice.model.Product;
 import org.lefab.billingservice.repositories.BillRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,17 +38,33 @@ public class BillingService {
   // getAllBilling
   @Transactional(readOnly = true)
   public List<BillResponseDto> getAllBilling() {
-    return billRepository.findAll().stream()
-        .peek(
-            bill -> {
-              bill.setCustomer(customerRestClient.findCustomerById(bill.getCustomerId()));
-              bill.getProductsItems()
-                  .forEach(
-                      item ->
-                          item.setProduct(
-                              productItemRestClient.findProductById(item.getProductId())));
-            })
-        .map(billingMapper::toBillingResponseDto)
-        .toList();
+
+      return billRepository.findAll()
+              .stream()
+              .map(this::loadRelations)
+              .map(billingMapper::toBillingResponseDto)
+              .toList();
   }
+
+    private BillEntity loadRelations(BillEntity bill) {
+
+        Customer customer =
+                customerRestClient.findCustomerById(
+                        bill.getCustomerId()
+                );
+
+        bill.setCustomer(customer);
+
+        bill.getProductsItems().forEach(item -> {
+
+            Product product =
+                    productItemRestClient.findProductById(
+                            item.getProductId()
+                    );
+
+            item.setProduct(product);
+        });
+
+        return bill;
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @FeignClient(name = "product-service")
 public interface ProductItemRestClient {
     @GetMapping("/products/{id}")
-    Product findProductById(@PathVariable Long id);
+    Product findProductById(@PathVariable("id") Long id);
 
     @GetMapping("/products")
     //PagedModel<Product> findAllProducts();

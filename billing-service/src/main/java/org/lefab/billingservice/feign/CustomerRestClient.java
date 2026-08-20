@@ -12,7 +12,7 @@ import java.util.List;
 @FeignClient(name = "customer-service")
 public interface CustomerRestClient {
     @GetMapping("/customers/{id}")
-    Customer findCustomerById(@PathVariable Long id);
+    Customer findCustomerById(@PathVariable("id") Long id);
     @GetMapping("/customers")
     List<Customer> findAllCustomers();
     //PagedModel<Customer> findAllCustomers();
