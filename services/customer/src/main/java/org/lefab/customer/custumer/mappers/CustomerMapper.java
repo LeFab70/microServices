@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface CustomerMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", constant = "ACTIVE")
     CustomerEntity toCustomerEntity(CustomerRequestDto request);
     CustomerResponseDto toCustomerResponse(CustomerEntity customer);
 }

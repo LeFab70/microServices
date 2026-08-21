@@ -1,6 +1,7 @@
 package org.lefab.customer.custumer.dtos;
 
 import org.lefab.customer.address.dtos.AddressResponse;
+import org.lefab.customer.custumer.enums.CustomerStatus;
 
 public record CustomerResponseDto(
         String id,
@@ -11,6 +12,7 @@ public record CustomerResponseDto(
 
         String email,
 
-        AddressResponse address
+        AddressResponse address,
+        CustomerStatus status
 ) {
 }

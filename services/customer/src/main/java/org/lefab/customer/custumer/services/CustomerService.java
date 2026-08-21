@@ -8,6 +8,7 @@ import org.jspecify.annotations.Nullable;
 import org.lefab.customer.custumer.dtos.CustomerRequestDto;
 import org.lefab.customer.custumer.dtos.CustomerResponseDto;
 import org.lefab.customer.custumer.entities.CustomerEntity;
+import org.lefab.customer.custumer.enums.CustomerStatus;
 import org.lefab.customer.custumer.mappers.CustomerMapper;
 import org.lefab.customer.custumer.repositories.CustomerRepository;
 import org.lefab.customer.exceptions.CustomerAlreadyExistsException;
@@ -58,5 +59,13 @@ public class CustomerService {
         return customerMapper.toCustomerResponse(customerRepository.findById(id).orElseThrow(
                 ()->new CustomerNotFoundException("Customer not found with id: "+id)
         ));
+    }
+    public  void deleteCustomer(String id) {
+        CustomerEntity customer=customerRepository.findById(id).orElseThrow(
+                ()->new CustomerNotFoundException("Customer not found with id: "+id)
+        );
+        //customerRepository.deleteById(id);
+        customer.setStatus(CustomerStatus.INACTIVE);
+        customerRepository.save(customer);
     }
 }

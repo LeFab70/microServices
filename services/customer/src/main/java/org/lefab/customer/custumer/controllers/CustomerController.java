@@ -38,4 +38,11 @@ public class CustomerController {
     public ResponseEntity<CustomerResponseDto> getCustomerById(@PathVariable("id")  @NotBlank String id) {
         return ResponseEntity.ok().body(customerService.getCustomerById(id));
     }
+
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable("id")  @NotBlank String id) {
+        customerService.deleteCustomer(id);
+        return ResponseEntity.noContent().build();
+    }
 }

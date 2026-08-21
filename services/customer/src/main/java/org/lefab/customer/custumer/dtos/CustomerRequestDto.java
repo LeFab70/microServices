@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import org.lefab.customer.address.dtos.AddressRequestDto;
+import org.lefab.customer.custumer.enums.CustomerStatus;
 
 @Builder
 public record CustomerRequestDto(
@@ -20,6 +21,7 @@ public record CustomerRequestDto(
         String email,
 
         @Valid
-        AddressRequestDto address
+        AddressRequestDto address,
+        CustomerStatus status
 ) {
 }
