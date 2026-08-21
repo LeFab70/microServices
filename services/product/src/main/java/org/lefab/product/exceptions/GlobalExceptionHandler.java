@@ -201,4 +201,21 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(error);
     }
+    //stock insufficient
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<ApiError> handleInsufficientStock(
+            InsufficientStockException exception,
+            HttpServletRequest request) {
+
+        ApiError error = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(error);
+    }
 }

@@ -1,4 +1,11 @@
 package org.lefab.product.product.dtos;
 
-public record ProductPurchaseResponseDto() {
+import java.math.BigDecimal;
+
+public record ProductPurchaseResponseDto(
+        Long productId,
+        String name,
+        BigDecimal price,
+        Integer quantityPurchased
+) {
 }

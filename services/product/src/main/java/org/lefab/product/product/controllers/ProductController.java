@@ -8,6 +8,7 @@ import org.lefab.product.product.dtos.ProductRequestDto;
 import org.lefab.product.product.dtos.ProductRequestPurchaseDto;
 import org.lefab.product.product.dtos.ProductResponseDto;
 import org.lefab.product.product.services.ProductService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,11 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDto>> getAllProducts(){
-        return ResponseEntity.ok().body(productService.getAllProducts());
+    public ResponseEntity<Page<ProductResponseDto>> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        return ResponseEntity.ok().body(productService.getAllProducts(page, size));
     }
 
     @GetMapping("/{id}")
@@ -32,15 +36,15 @@ public class ProductController {
     }
     @PostMapping
     public ResponseEntity<ProductResponseDto> createProduct(
-            @Valid @RequestBody ProductRequestDto productRequestDto
+             @RequestBody @Valid ProductRequestDto productRequestDto
             ){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productRequestDto));
     }
 
     @PostMapping(value = "/purchase")
     public ResponseEntity<List<ProductPurchaseResponseDto>> createProduct(
-            @Valid @RequestBody List<ProductRequestPurchaseDto> requestPurchaseDto
+             @RequestBody List<@Valid ProductRequestPurchaseDto> requestPurchaseDto
     ){
-        return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonList(productService.createProductPurchase(requestPurchaseDto)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProductPurchase(requestPurchaseDto));
     }
 }
