@@ -40,6 +40,8 @@ services:
   mongodb:
     image: mongo
     container_name: mongo_db
+    networks:
+      - microservices-net
     ports:
       - 27017:27017
     volumes:
@@ -51,13 +53,17 @@ services:
   mongo-express:
     image: mongo-express
     container_name: mongo_express
-    restart: always
+    networks:
+      - microservices-net
+    restart: unless-stopped
     ports:
       - 8081:8081
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=fab
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=fab
-      - ME_CONFIG_MONGODB_SERVER=mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: fab
+      ME_CONFIG_MONGODB_ADMINPASSWORD: fab
+      ME_CONFIG_BASICAUTH_USERNAME: fab
+      ME_CONFIG_BASICAUTH_PASSWORD: fab
+      ME_CONFIG_MONGODB_URL: mongodb://fab:fab@mongodb:27017/
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -71,24 +77,30 @@ services:
     networks:
       - microservices-net
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.4.0
     container_name: ms_kafka
     ports:
       - "9092:9092"
     depends_on:
       - zookeeper
     environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
     networks:
       - microservices-net
 
+
+
   mail-dev:
     container_name: ms-mail-dev
+    networks:
+      - microservices-net
     image: maildev/maildev
     ports:
       - 1080:1080
