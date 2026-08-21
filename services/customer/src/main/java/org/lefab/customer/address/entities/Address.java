@@ -1,4 +1,4 @@
-package org.lefab.customer.custumer.entities;
+package org.lefab.customer.address.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

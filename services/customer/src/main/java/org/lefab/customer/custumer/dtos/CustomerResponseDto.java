@@ -1,4 +1,16 @@
 package org.lefab.customer.custumer.dtos;
 
-public record CustomerResponseDto() {
+import org.lefab.customer.address.dtos.AddressResponse;
+
+public record CustomerResponseDto(
+        String id,
+
+        String firstName,
+
+        String lastName,
+
+        String email,
+
+        AddressResponse address
+) {
 }

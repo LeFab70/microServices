@@ -1,7 +1,11 @@
 package org.lefab.customer.custumer.repositories;
 
-import org.lefab.customer.custumer.entities.Customer;
+import org.lefab.customer.custumer.entities.CustomerEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface CustomerRepository extends MongoRepository <Customer, String>{
+import java.util.Optional;
+
+public interface CustomerRepository extends MongoRepository <CustomerEntity, String>{
+    boolean existsByEmail(String email);
+    Optional<CustomerEntity> findByEmail(String email);
 }
