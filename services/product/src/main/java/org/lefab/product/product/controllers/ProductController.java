@@ -41,6 +41,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productRequestDto));
     }
 
+    //for the order service call
     @PostMapping(value = "/purchase")
     public ResponseEntity<List<ProductPurchaseResponseDto>> createProduct(
              @RequestBody List<@Valid ProductRequestPurchaseDto> requestPurchaseDto
