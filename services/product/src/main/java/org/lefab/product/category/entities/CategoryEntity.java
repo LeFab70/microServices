@@ -33,6 +33,10 @@ public class CategoryEntity {
 
     private String description;
 
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean active = true;
+
     @OneToMany(
             mappedBy = "category",
             cascade = CascadeType.ALL,

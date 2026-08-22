@@ -82,23 +82,20 @@ public class ProductService {
         var productsById = storedProducts.stream()
                 .collect(Collectors.toMap(ProductEntity::getId, p -> p));
 
-        // 1. valider le stock pour tout le monde avant de toucher quoi que ce soit
+        // décrément atomique en base pour chaque produit : la requête UPDATE elle-même
+        // vérifie "availableQuantity >= quantity", donc pas de fenêtre de course possible
+        // entre deux achats concurrents sur le même produit (pas besoin de lock explicite).
+        List<ProductPurchaseResponseDto> responses = new ArrayList<>();
         for (ProductRequestPurchaseDto request : aggregatedRequests) {
             ProductEntity product = productsById.get(request.productId());
-            if (product.getAvailableQuantity() < request.quantity()) {
+            int updatedRows = productRepository.decrementStock(request.productId(), request.quantity());
+            if (updatedRows == 0) {
                 throw new InsufficientStockException(
                         "Insufficient stock for product '" + product.getName() +
                                 "'. Requested: " + request.quantity() +
                                 ", Available: " + product.getAvailableQuantity()
                 );
             }
-        }
-
-        // 2. décrémenter et construire les réponses
-        List<ProductPurchaseResponseDto> responses = new ArrayList<>();
-        for (ProductRequestPurchaseDto request : aggregatedRequests) {
-            ProductEntity product = productsById.get(request.productId());
-            product.setAvailableQuantity(product.getAvailableQuantity() - request.quantity());
             responses.add(new ProductPurchaseResponseDto(
                     product.getId(),
                     product.getName(),
@@ -106,7 +103,6 @@ public class ProductService {
                     request.quantity().intValue()
             ));
         }
-        productRepository.saveAll(storedProducts);
 
         return responses;
     }
