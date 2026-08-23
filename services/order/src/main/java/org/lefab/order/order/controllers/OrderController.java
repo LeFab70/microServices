@@ -8,6 +8,7 @@ import org.lefab.order.order.dtos.CustomerSummaryDto;
 import org.lefab.order.order.dtos.OrderRequestDto;
 import org.lefab.order.order.dtos.OrderResponseDto;
 import org.lefab.order.order.services.OrderServices;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,11 @@ public class OrderController {
 
     //get all orders
     @GetMapping
-    public ResponseEntity<List<OrderResponseDto>> getAllOrders(){
-        return ResponseEntity.ok(orderServices.getAllOrders());
+    public ResponseEntity<Page<OrderResponseDto>> getAllOrders(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        return ResponseEntity.ok(orderServices.getAllOrders(page, size));
     }
 
     //Create order

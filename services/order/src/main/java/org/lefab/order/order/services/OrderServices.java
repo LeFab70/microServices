@@ -17,6 +17,9 @@ import org.lefab.order.orderItem.dtos.OrderLineRequestDto;
 import org.lefab.order.orderItem.dtos.OrderLineResponseDto;
 import org.lefab.order.orderItem.dtos.ProductPurchaseResponseDto;
 import org.lefab.order.orderItem.entities.OrderLineEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,9 +38,25 @@ public class OrderServices {
     private final ProductRestClient productRestClient;
     private final OrderProducer orderProducer;
 
-    //get all orders
-    public List<OrderResponseDto> getAllOrders(){
-        return List.of();
+    //get all orders (paginé)
+    @Transactional(readOnly = true)
+    public Page<OrderResponseDto> getAllOrders(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return orderRepository.findAll(pageable).map(
+                order -> {
+                    CustomerSummaryDto customer = customerRestClient.getCustomerById(order.getCustomerId());
+                    OrderResponseDto mapped = orderMapper.toResponse(order);
+                    return new OrderResponseDto(
+                            mapped.id(),
+                            mapped.orderDate(),
+                            mapped.lastUpdate(),
+                            mapped.reference(),
+                            mapped.status(),
+                            customer,
+                            mapped.orderLine()
+                    );
+                }
+        );
     }
 
 
@@ -64,6 +83,7 @@ public class OrderServices {
         order.setOrderLine(purchased.stream()
                 .map(p -> OrderLineEntity.builder()
                         .productId(p.productId())
+                        .productName(p.name())
                         .quantity((double) p.quantityPurchased())
                         .unitPrice(p.price())
                         .order(order)

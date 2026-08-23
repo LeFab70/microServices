@@ -31,7 +31,7 @@ Chaque service est enregistré auprès de `discovery` (Eureka) et récupère sa 
 |---|---|---|
 | Customer (+ Address) | `customer-service` | ✅ fait |
 | Product (+ Category) | `product-service` | ✅ fait |
-| Order (+ OrderLine) | `order-service` | ✅ fait — orchestrateur : Feign vers `customer`/`product`, réserve le stock via `POST /product/purchase` |
+| Order (+ OrderLine) | `order-service` | ✅ fait — orchestrateur : Feign vers `customer`/`product`, réserve le stock via `POST /product/purchase`, publie un événement Kafka (`order-topic`) après création |
 | Payment | `payment-service` | 🚧 à créer |
 | Notification | `notification-service` | 🚧 à créer — probablement déclenché en asynchrone via Kafka après un achat confirmé |
 | API Gateway | `api-gateway` | 🚧 à créer — point d'entrée unique pour le frontend Angular |

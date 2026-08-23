@@ -9,6 +9,5 @@ import org.mapstruct.Mapping;
 public interface OrderLineMapper {
 
     @Mapping(target = "price", source = "unitPrice")
-    @Mapping(target = "productName", ignore = true)
     OrderLineResponseDto toResponse(OrderLineEntity entity);
 }
