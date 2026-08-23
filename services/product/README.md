@@ -1,6 +1,6 @@
 # product-service
 
-Microservice responsable du catalogue produit : catégories, produits, stock et achat (décrément atomique du stock, utilisé par `order-service`/`billing-service`).
+Microservice responsable du catalogue produit : catégories, produits, stock et achat (décrément atomique du stock, appelé par `order-service` via Feign).
 
 ## Stack
 

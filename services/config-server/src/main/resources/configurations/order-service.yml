@@ -1,4 +1,6 @@
 spring:
+  kafka:
+    bootstrap-servers: localhost:29092
   datasource:
     url: jdbc:postgresql://localhost:5433/order-db
     username: fab

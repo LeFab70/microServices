@@ -3,6 +3,8 @@ package org.lefab.order.order.controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.protocol.HTTP;
+import org.lefab.order.clients.CustomerRestClient;
+import org.lefab.order.order.dtos.CustomerSummaryDto;
 import org.lefab.order.order.dtos.OrderRequestDto;
 import org.lefab.order.order.dtos.OrderResponseDto;
 import org.lefab.order.order.services.OrderServices;
@@ -34,4 +36,11 @@ public class OrderController {
         );
     }
 
+
+//    private final CustomerRestClient customerRestClient;
+//    //testing feign
+//    @GetMapping("/test-customer/{customerId}")
+//    public ResponseEntity<CustomerSummaryDto> testCustomer(@PathVariable String customerId) {
+//        return ResponseEntity.ok(customerRestClient.getCustomerById(customerId));
+//    }
 }
