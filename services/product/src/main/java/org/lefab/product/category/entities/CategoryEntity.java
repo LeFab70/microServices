@@ -1,7 +1,7 @@
 package org.lefab.product.category.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.*;
 import org.lefab.product.product.entities.ProductEntity;
 
