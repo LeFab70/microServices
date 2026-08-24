@@ -2,7 +2,7 @@
 
 Microservice orchestrateur : crée une commande (`Order` + `OrderLine`) en validant le client et en réservant le stock auprès des autres services, via OpenFeign + Eureka (aucune URL codée en dur), puis publie un événement Kafka pour les futurs `payment-service`/`notification-service`.
 
-> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Juste Actuator (`/actuator/health`), pas de Grafana/Prometheus. Spring MVC classique (pas de WebFlux), pas de WebSocket — le suivi de commande se fait uniquement par polling sur `GET /api/v1/orders/{id}`. Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
+> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Expose `/actuator/health` et `/actuator/prometheus` (scrapé par Prometheus/Grafana). Spring MVC classique (pas de WebFlux), pas de WebSocket — le suivi de commande se fait uniquement par polling sur `GET /api/v1/orders/{id}`. Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
 
 ## Stack
 

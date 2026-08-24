@@ -8,3 +8,12 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}/${server.port}/eureka/
 server:
   port: 8761
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: discovery-service

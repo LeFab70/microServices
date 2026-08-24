@@ -2,7 +2,7 @@
 
 Microservice de notification : écoute `order-topic` et `payment-topic` (Kafka), enregistre une trace de chaque notification en MongoDB, et envoie un email de confirmation (via Thymeleaf pour le contenu HTML).
 
-> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
+> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Expose `/actuator/prometheus` (scrapé par Prometheus/Grafana) — a récupéré `spring-boot-starter-webmvc`+`actuator` pour ça, qu'il n'avait pas au départ. Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
 
 ## Stack
 
@@ -11,6 +11,7 @@ Microservice de notification : écoute `order-topic` et `payment-topic` (Kafka),
 - Spring Kafka (`spring-boot-starter-kafka`)
 - Spring Mail + Thymeleaf (templates HTML dans `src/main/resources/templates/`)
 - Spring Cloud Config (config-server)
+- Spring MVC + Actuator + Micrometer/Prometheus — ajoutés uniquement pour exposer `/actuator/prometheus` (aucune route métier), ce service n'avait au départ aucun starter web
 - Pas de client Eureka — ce service ne reçoit jamais d'appel entrant d'un autre service, pas besoin d'être découvrable
 
 ## Prérequis

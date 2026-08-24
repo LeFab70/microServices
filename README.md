@@ -84,8 +84,11 @@ docker compose up -d
 | `mongodb` | 27018 → 27017 | Base `customer-db` (port décalé pour éviter le conflit avec un MongoDB local) |
 | `mongo-express` | 8081 | UI d'admin MongoDB |
 | `kafka` / `zookeeper` | 9092 (interne conteneurs) / 29092 (hôte) / 22181 | Messagerie événementielle — `order-topic`, `payment-topic`, consommés par `payment`/`notification` |
+| `kafka-ui` | 8085 | UI d'inspection des topics/messages/consumer groups Kafka |
 | `mail-dev` | 1080 (UI), 1025 (SMTP) | Serveur mail de dev, pour tester les emails de confirmation |
-| `zipkin` | 9411 | Traçage distribué |
+| `zipkin` | 9411 | Traçage distribué (conteneur présent, mais aucun service ne lui envoie de traces pour l'instant — voir Limitations) |
+| `prometheus` | 9090 | Scrape `/actuator/prometheus` de chaque service via `host.docker.internal` (config : `prometheus/prometheus.yml`) |
+| `grafana` | 3000 | Dashboards de métriques — login `admin`/`admin`, ajouter Prometheus comme datasource (`http://prometheus:9090`) |
 
 ## Démarrage (ordre à respecter)
 
@@ -140,13 +143,22 @@ Trois services métier publient une doc Swagger (pas encore fait sur `payment-se
 | `product-service` | http://localhost:8091/swagger-ui/index.html |
 | `order-service` | http://localhost:8092/swagger-ui/index.html |
 
+## Observabilité (Prometheus + Grafana)
+
+Chaque service expose `/actuator/prometheus` (nécessite d'avoir été redémarré après ajout de `micrometer-registry-prometheus` + config `management.endpoints.web.exposure.include`). Prometheus (conteneur Docker) scrape ces endpoints via `host.docker.internal` — les services tournent nativement sur la machine, pas dans Docker, même piège réseau que Mongo/Kafka rencontré plus tôt sur ce projet.
+
+- Prometheus : http://localhost:9090 (page **Status → Targets** pour vérifier que chaque service est `UP`)
+- Grafana : http://localhost:3000 (`admin`/`admin`) — ajouter Prometheus comme datasource : `http://prometheus:9090`
+
+Chaque métrique est taguée `application=<nom-du-service>` (configuré via `management.metrics.tags.application` dans chaque `*-service.yml` sur `config-server`) pour pouvoir filtrer/grouper par service dans Grafana.
+
 ## ⚠️ Limitations / hors scope de ce projet
 
 Ce projet est un TP d'apprentissage — plusieurs sujets volontairement **non traités**, à garder en tête :
 
 - **Pas de sécurité applicative** : aucun JWT, aucun Keycloak/OAuth2, aucune authentification ni autorisation sur les endpoints. Toutes les routes sont ouvertes publiquement.
 - **Pas de rate limiting** : aucune protection contre l'abus/spam d'un endpoint. `gateway-service` embarque le filtre Bucket4j de Spring Cloud Gateway (disponible dans la dépendance), mais **aucune limite n'est configurée** pour l'instant.
-- **Observabilité minimale** : seul Spring Boot Actuator est présent (health checks basiques, `/actuator/health`), sur `config-server`/`customer`/`product`/`order`/`payment` — **pas** sur `discovery` ni `notification`. Pas de Grafana, pas de Prometheus, pas de dashboards de métriques. Le conteneur `zipkin` tourne dans `docker-compose.yml`, mais **aucun service n'a la dépendance de tracing** (`micrometer-tracing`/`zipkin-reporter`) — le conteneur est présent mais rien ne lui envoie de traces pour l'instant.
+- **Métriques oui, tracing distribué non** : tous les services exposent `/actuator/prometheus` (Micrometer), scrapé par Prometheus et visualisable dans Grafana. Le conteneur `zipkin` tourne dans `docker-compose.yml`, mais **aucun service n'a la dépendance de tracing** (`micrometer-tracing`/`zipkin-reporter`) — impossible pour l'instant de suivre une requête à travers plusieurs services (ex: `order` → `product` → Kafka → `payment`).
 - **Pas de WebFlux** : tous les services REST (`customer`/`product`/`order`/`payment`) utilisent Spring MVC classique (I/O bloquant, un thread par requête). Pas dimensionné pour un grand nombre de clients simultanés — un vrai besoin de scalabilité à fort trafic demanderait de repasser en réactif (WebFlux + driver Mongo/R2DBC réactifs).
 - **Pas de WebSocket / suivi de commande en temps réel** : le statut d'une commande (`OrderStatus`) ne peut être consulté qu'en interrogeant `GET /api/v1/orders/{id}` (polling côté client) — aucun push serveur→client. Un vrai suivi de commande en direct demanderait un canal WebSocket (ou SSE) sur `order-service`, probablement alimenté par les mêmes événements Kafka déjà publiés (`order-topic`/`payment-topic`).
 
@@ -163,7 +175,8 @@ Si ce projet devait évoluer vers quelque chose de plus proche de la prod, ce so
 - Spring Mail + Thymeleaf (`notification`, emails via `mail-dev`)
 - MapStruct (mapping entité ↔ DTO), Lombok
 - springdoc-openapi (Swagger sur `customer`/`product`/`order`)
-- Docker Compose pour l'infra (PostgreSQL, MongoDB, Kafka, mail-dev, Zipkin)
+- Micrometer + Prometheus (`/actuator/prometheus` sur les 8 services) + Grafana pour les dashboards
+- Docker Compose pour l'infra (PostgreSQL, MongoDB, Kafka, mail-dev, Zipkin, Prometheus, Grafana)
 
 ## Documentation par service
 

@@ -2,7 +2,7 @@
 
 Microservice responsable du catalogue produit : catégories, produits, stock et achat (décrément atomique du stock, appelé par `order-service` via Feign).
 
-> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Juste Actuator (`/actuator/health`), pas de Grafana/Prometheus. Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
+> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Expose `/actuator/health` et `/actuator/prometheus` (scrapé par Prometheus/Grafana). Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
 
 ## Stack
 

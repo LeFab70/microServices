@@ -4,11 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91e0875-2cb2-4108-b3c5-438961eb91ce" name="Changes" comment="notification ok">
-      <change afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/gateway-service.yml" afterDir="false" />
+    <list default="true" id="b91e0875-2cb2-4108-b3c5-438961eb91ce" name="Changes" comment="updated readme">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/customer-service.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/customer-service.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/discovery-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/discovery-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/gateway-service.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/gateway-service.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/notification-service.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/notification-service.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/order-service.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/order-service.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/payment-service.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/payment-service.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/product-service.yml" beforeDir="false" afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/product-service.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/customer/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/customer/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/customer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/customer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/discovery/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/discovery/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/discovery/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/discovery/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/gateway/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/gateway/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/order/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/order/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/order/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/product/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/product/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/product/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/product/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +170,7 @@
               <entry key="CustomerApplication" value="STOPPED" />
               <entry key="DiscoveryApplication" value="STOPPED" />
               <entry key="GatewayApplication" value="STOPPED" />
-              <entry key="NotificationApplication" value="FAILED" />
+              <entry key="NotificationApplication" value="STOPPED" />
               <entry key="OrderApplication" value="STOPPED" />
               <entry key="PaymentApplication" value="STOPPED" />
               <entry key="ProductApplication" value="FAILED" />
@@ -282,7 +304,7 @@
       <workItem from="1787541247643" duration="463000" />
       <workItem from="1787541729941" duration="50000" />
       <workItem from="1787541845836" duration="140000" />
-      <workItem from="1787542031871" duration="12916000" />
+      <workItem from="1787542031871" duration="14432000" />
     </task>
     <task id="LOCAL-00001" summary="init setup">
       <option name="closed" value="true" />
@@ -468,7 +490,23 @@
       <option name="project" value="LOCAL" />
       <updated>1787553854223</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="gateway done with mvc pattern">
+      <option name="closed" value="true" />
+      <created>1787555210433</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1787555210433</updated>
+    </task>
+    <task id="LOCAL-00025" summary="updated readme">
+      <option name="closed" value="true" />
+      <created>1787555291001</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1787555291001</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -507,7 +545,9 @@
     <MESSAGE value="setup notification" />
     <MESSAGE value="listerner for Notification" />
     <MESSAGE value="notification ok" />
-    <option name="LAST_COMMIT_MESSAGE" value="notification ok" />
+    <MESSAGE value="gateway done with mvc pattern" />
+    <MESSAGE value="updated readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated readme" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

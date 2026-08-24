@@ -119,6 +119,34 @@ services:
       - 1080:1080
       - 1025:1025
 
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    networks:
+      - microservices-net
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus:/prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    networks:
+      - microservices-net
+    ports:
+      - 3000:3000
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana:/var/lib/grafana
+    depends_on:
+      - prometheus
+
 networks:
   microservices-net:
     driver: bridge
@@ -127,3 +155,5 @@ volumes:
   postgres:
   pgadmin:
   mongo:
+  prometheus:
+  grafana:

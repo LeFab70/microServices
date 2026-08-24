@@ -21,3 +21,12 @@ spring:
     locations: classpath:/db/migration
 server:
   port: 8091
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    tags:
+      application: product-service
