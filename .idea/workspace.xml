@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b91e0875-2cb2-4108-b3c5-438961eb91ce" name="Changes" comment="payement service setup and kafka">
+      <change afterPath="$PROJECT_DIR$/services/product/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/ProductApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/category/controllers/CategoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/category/services/CategoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/config/OpenApiConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/product/src/test/java/org/lefab/product/ProductApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/google-java-format.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/google-java-format.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/e-commerce-app2.iml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="com.intellij.jpb.JpaEntity" />
+        <option value="Exception" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="Record" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LeFab70&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LeFab70/microServices.git&quot;,
+    &quot;accountId&quot;: &quot;71766ac8-423e-47a9-911a-fe35efcfc7bf&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3IAxUfIGpNOyvkpSkuyTE49kods" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.docker-compose.yml.kafka-ui: Compose Deployment.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.ConfigServerApplication.executor": "Run",
+    "Spring Boot.CustomerApplication.executor": "Run",
+    "Spring Boot.DiscoveryApplication.executor": "Run",
+    "Spring Boot.OrderApplication.executor": "Run",
+    "Spring Boot.PaymentApplication.executor": "Run",
+    "Spring Boot.ProductApplication.executor": "Run",
+    "git-widget-placeholder": "ecommerce",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/fabricekouonang/Documents/springBootWebsocket/reviewsSpringBoot/e-commerce-app2/services/payment/src/main/java/org/lefab/payment",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.lefab.order.kafka" />
+      <recent name="org.lefab.order.order.services" />
+      <recent name="org.lefab.order.orderItem.dtos" />
+      <recent name="org.lefab.order.order.dtos" />
+      <recent name="org.lefab.order.order.enums" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/services/payment/src/main/java/org/lefab/payment" />
+      <recent name="$PROJECT_DIR$/services/order/src/main/java/org/lefab/order/order" />
+      <recent name="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/exceptions/category" />
+      <recent name="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/exceptions" />
+      <recent name="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/services" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.lefab.product.product.mapper" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.lefab.customer.exceptions" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="SpringBootApplicationConfigurationType">
+          <value>
+            <map>
+              <entry key="ConfigServerApplication" value="FAILED" />
+              <entry key="CustomerApplication" value="STOPPED" />
+              <entry key="DiscoveryApplication" value="STOPPED" />
+              <entry key="OrderApplication" value="STOPPED" />
+              <entry key="PaymentApplication" value="STOPPED" />
+              <entry key="ProductApplication" value="FAILED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.PaymentApplication">
+    <configuration name="ConfigServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="config-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.lefab.configserver.ConfigServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CustomerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="customer.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.lefab.customer.CustomerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DiscoveryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="discovery" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.lefab.discovery.DiscoveryApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="order.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.lefab.order.OrderApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PaymentApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="payment.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.lefab.payment.PaymentApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="product.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.lefab.product.ProductApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.lefab.product.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.kafka-ui: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="kafka-ui" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Docker.docker-compose.yml.kafka-ui: Compose Deployment" />
+      <item itemvalue="Spring Boot.PaymentApplication" />
+      <item itemvalue="Spring Boot.OrderApplication" />
+      <item itemvalue="Spring Boot.ConfigServerApplication" />
+      <item itemvalue="Spring Boot.CustomerApplication" />
+      <item itemvalue="Spring Boot.DiscoveryApplication" />
+      <item itemvalue="Spring Boot.ProductApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ProductApplication" />
+        <item itemvalue="Docker.docker-compose.yml.kafka-ui: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b91e0875-2cb2-4108-b3c5-438961eb91ce" name="Changes" comment="" />
+      <created>1787221193589</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1787221193589</updated>
+      <workItem from="1787221195088" duration="4934000" />
+      <workItem from="1787226650680" duration="32781000" />
+      <workItem from="1787336444107" duration="49009000" />
+      <workItem from="1787541124684" duration="84000" />
+      <workItem from="1787541247643" duration="463000" />
+      <workItem from="1787541729941" duration="50000" />
+      <workItem from="1787541845836" duration="140000" />
+      <workItem from="1787542031871" duration="1869000" />
+    </task>
+    <task id="LOCAL-00001" summary="init setup">
+      <option name="closed" value="true" />
+      <created>1787224174994</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1787224174994</updated>
+    </task>
+    <task id="LOCAL-00002" summary="config eureka and customer service">
+      <option name="closed" value="true" />
+      <created>1787281516585</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1787281516585</updated>
+    </task>
+    <task id="LOCAL-00003" summary="controller and service customer service ok">
+      <option name="closed" value="true" />
+      <created>1787289413212</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1787289413212</updated>
+    </task>
+    <task id="LOCAL-00004" summary="service customer withcontroller and testing postmann ok">
+      <option name="closed" value="true" />
+      <created>1787291990130</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1787291990130</updated>
+    </task>
+    <task id="LOCAL-00005" summary="no data in mongo config yaml">
+      <option name="closed" value="true" />
+      <created>1787294323181</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1787294323181</updated>
+    </task>
+    <task id="LOCAL-00006" summary="product init with postgresql">
+      <option name="closed" value="true" />
+      <created>1787342903386</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1787342903386</updated>
+    </task>
+    <task id="LOCAL-00007" summary="controller product ok">
+      <option name="closed" value="true" />
+      <created>1787348005215</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1787348005215</updated>
+    </task>
+    <task id="LOCAL-00008" summary="controller product ok">
+      <option name="closed" value="true" />
+      <created>1787348068946</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1787348068946</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add swagger in and readme product service">
+      <option name="closed" value="true" />
+      <created>1787401042172</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1787401042172</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add global readme">
+      <option name="closed" value="true" />
+      <created>1787401088254</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1787401088254</updated>
+    </task>
+    <task id="LOCAL-00011" summary="setup order service">
+      <option name="closed" value="true" />
+      <created>1787423747026</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1787423747026</updated>
+    </task>
+    <task id="LOCAL-00012" summary="entities and dto mappers for order created">
+      <option name="closed" value="true" />
+      <created>1787445924027</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1787445924027</updated>
+    </task>
+    <task id="LOCAL-00013" summary="migration ok">
+      <option name="closed" value="true" />
+      <created>1787446775449</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1787446775449</updated>
+    </task>
+    <task id="LOCAL-00014" summary="global exception for order with feign exception">
+      <option name="closed" value="true" />
+      <created>1787447777197</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1787447777197</updated>
+    </task>
+    <task id="LOCAL-00015" summary="add kafka in orderservice">
+      <option name="closed" value="true" />
+      <created>1787496421801</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1787496421801</updated>
+    </task>
+    <task id="LOCAL-00016" summary="serialization of kafka and and productname in orderitem">
+      <option name="closed" value="true" />
+      <created>1787498737133</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1787498737133</updated>
+    </task>
+    <task id="LOCAL-00017" summary="payement service setup and kafka">
+      <option name="closed" value="true" />
+      <created>1787543880868</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1787543880868</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init setup" />
+    <MESSAGE value="config eureka and customer service" />
+    <MESSAGE value="controller and service customer service ok" />
+    <MESSAGE value="service customer withcontroller and testing postmann ok" />
+    <MESSAGE value="no data in mongo config yaml" />
+    <MESSAGE value="product init with postgresql" />
+    <MESSAGE value="controller product ok" />
+    <MESSAGE value="add swagger in and readme product service" />
+    <MESSAGE value="add global readme" />
+    <MESSAGE value="setup order service" />
+    <MESSAGE value="entities and dto mappers for order created" />
+    <MESSAGE value="migration ok" />
+    <MESSAGE value="global exception for order with feign exception" />
+    <MESSAGE value="add kafka in orderservice" />
+    <MESSAGE value="serialization of kafka and and productname in orderitem" />
+    <MESSAGE value="payement service setup and kafka" />
+    <option name="LAST_COMMIT_MESSAGE" value="payement service setup and kafka" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
