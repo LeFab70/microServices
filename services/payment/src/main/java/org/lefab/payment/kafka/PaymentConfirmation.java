@@ -1,6 +1,8 @@
 package org.lefab.payment.kafka;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import lombok.Builder;
 import org.lefab.payment.dtos.CustomerSummaryDto;
 import org.lefab.payment.dtos.ProductSummaryDto;
@@ -17,5 +19,5 @@ public record PaymentConfirmation(
         PaymentMethod paymentMethod,
         PaymentStatus paymentStatus,
         CustomerSummaryDto customer,
-        ProductSummaryDto products
+        List<ProductSummaryDto> products
 ) {}

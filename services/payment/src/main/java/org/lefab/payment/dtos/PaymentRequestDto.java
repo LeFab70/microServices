@@ -7,6 +7,7 @@ import lombok.Builder;
 import org.lefab.payment.enums.PaymentMethod;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Builder
 public record PaymentRequestDto(
@@ -29,7 +30,11 @@ public record PaymentRequestDto(
         PaymentMethod paymentMethod,
 
        @NotNull(message = "Customer is required")
-       CustomerSummaryDto customer
+       CustomerSummaryDto customer,
+
+        List<ProductSummaryDto> products
+
+
 
 ) {
 }

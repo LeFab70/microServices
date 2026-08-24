@@ -6,6 +6,15 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.value.default.type: paymentConfirmation:org.lefab.payment.kafka.PaymentConfirmation
+    consumer:
+      group-id: payment-consumer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+          spring.json.value.default.type: org.lefab.payment.dtos.OrderConfirmation
+          spring.json.trusted.packages: org.lefab.payment.dtos
+
   datasource:
     url: jdbc:postgresql://localhost:5433/payment-db
     username: fab

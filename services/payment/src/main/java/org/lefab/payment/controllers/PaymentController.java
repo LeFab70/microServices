@@ -4,6 +4,7 @@ package org.lefab.payment.controllers;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.lefab.payment.dtos.OrderConfirmation;
 import org.lefab.payment.dtos.PaymentRequestDto;
 import org.lefab.payment.dtos.PaymentResponseDto;
 import org.lefab.payment.services.PaymentServices;
@@ -31,7 +32,7 @@ public class PaymentController {
     //Create payment
     @PostMapping
       public ResponseEntity<PaymentResponseDto> createPayment(
-            @RequestBody @Valid PaymentRequestDto paymentRequestDto
+            @RequestBody @Valid OrderConfirmation paymentRequestDto
             ){
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 paymentServices.createPayment(paymentRequestDto)

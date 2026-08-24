@@ -5,8 +5,13 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
+import org.lefab.payment.dtos.OrderConfirmation;
 import org.lefab.payment.dtos.PaymentRequestDto;
 import org.lefab.payment.dtos.PaymentResponseDto;
+import org.lefab.payment.entities.PaymentEntity;
+import org.lefab.payment.exceptions.PaymentNotFoundException;
+import org.lefab.payment.kafka.PaymentConfirmation;
+import org.lefab.payment.kafka.PaymentProducer;
 import org.lefab.payment.mapper.PaymentMapper;
 import org.lefab.payment.repositories.PaymentRepository;
 import org.springframework.data.domain.Page;
@@ -18,29 +23,66 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class PaymentServices {
-//    private final OrderRepository orderRepository;
-//    private final OrderMapper orderMapper;
-//    private final CustomerRestClient customerRestClient;
-//    private final ProductRestClient productRestClient;
-//    private final OrderProducer orderProducer;
+
     private final PaymentRepository paymentRepository;
     private final PaymentMapper paymentMapper;
+    private final PaymentProducer paymentProducer;
 //
     //get all payment (paginé)
 
     public Page<PaymentResponseDto> getAllPayment(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
-        // TODO: quand le Feign vers customer-service sera câblé ici, réinjecter customer
+        // TODO: quand cusummer, réinjecter customer
         // comme dans OrderServices (mapped -> new PaymentResponseDto(..., customer))
         return paymentRepository.findAll(pageable).map(paymentMapper::toResponse);
     }
+    @Transactional
+    public PaymentResponseDto createPayment(
+            OrderConfirmation orderConfirmation
+    ) {
 
-    public @Nullable PaymentResponseDto createPayment(@Valid PaymentRequestDto paymentRequestDto) {
-        return null;
+        PaymentEntity payment =
+                PaymentEntity.builder()
+                        .orderId(orderConfirmation.orderId())
+                        .orderReference(
+                                orderConfirmation.orderReference()
+                        )
+                        .amount(orderConfirmation.totalAmount())
+                        .paymentMethod(
+                                orderConfirmation.paymentMethod()
+                        )
+                        .build();
+
+        PaymentEntity saved =
+                paymentRepository.save(payment);
+
+        PaymentConfirmation paymentConfirmation =
+                PaymentConfirmation.builder()
+                        .paymentId(saved.getId())
+                        .orderId(saved.getOrderId())
+                        .orderReference(saved.getOrderReference())
+                        .amount(saved.getAmount())
+                        .paymentMethod(saved.getPaymentMethod())
+                        .paymentStatus(saved.getPaymentStatus())
+                        .customer(
+                                orderConfirmation.customerSummaryDto()
+                        )
+                        .products(
+                                orderConfirmation.productPurchases()
+                        )
+                        .build();
+
+        paymentProducer.sendPaymentConfirmation(
+                paymentConfirmation
+        );
+
+        return paymentMapper.toResponse(saved);
     }
 
     public @Nullable PaymentResponseDto getPaymentById(@NotNull Long id) {
-        return null;
+        return paymentRepository.findById(id).map(paymentMapper::toResponse).orElseThrow(
+                ()-> new PaymentNotFoundException("Payment not found with id: "+id)
+        );
     }
 
 //
