@@ -14,6 +14,7 @@ spring:
       properties:
           spring.json.value.default.type: org.lefab.payment.dtos.OrderConfirmation
           spring.json.trusted.packages: org.lefab.payment.dtos
+          spring.json.use.type.headers: false
 
   datasource:
     url: jdbc:postgresql://localhost:5433/payment-db
