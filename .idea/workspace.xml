@@ -4,20 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91e0875-2cb2-4108-b3c5-438961eb91ce" name="Changes" comment="listerner for Notification">
-      <change afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/notification-service.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/email/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/notification/src/main/resources/templates/order-confirmation.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/notification/src/main/resources/templates/payment-success.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b91e0875-2cb2-4108-b3c5-438961eb91ce" name="Changes" comment="notification ok">
+      <change afterPath="$PROJECT_DIR$/services/config-server/src/main/resources/configurations/gateway-service.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/dtos/CustomerSummaryDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/dtos/CustomerSummaryDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/kafka/consumers/NotificationConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/kafka/consumers/NotificationConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/notification/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/order/src/main/java/org/lefab/order/order/dtos/CustomerSummaryDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/order/src/main/java/org/lefab/order/order/dtos/CustomerSummaryDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/order/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +75,7 @@
     "Spring Boot.ConfigServerApplication.executor": "Run",
     "Spring Boot.CustomerApplication.executor": "Run",
     "Spring Boot.DiscoveryApplication.executor": "Run",
+    "Spring Boot.GatewayApplication.executor": "Run",
     "Spring Boot.NotificationApplication.executor": "Run",
     "Spring Boot.OrderApplication.executor": "Run",
     "Spring Boot.PaymentApplication.executor": "Run",
@@ -155,6 +147,7 @@
               <entry key="ConfigServerApplication" value="STOPPED" />
               <entry key="CustomerApplication" value="STOPPED" />
               <entry key="DiscoveryApplication" value="STOPPED" />
+              <entry key="GatewayApplication" value="STOPPED" />
               <entry key="NotificationApplication" value="FAILED" />
               <entry key="OrderApplication" value="STOPPED" />
               <entry key="PaymentApplication" value="STOPPED" />
@@ -289,7 +282,7 @@
       <workItem from="1787541247643" duration="463000" />
       <workItem from="1787541729941" duration="50000" />
       <workItem from="1787541845836" duration="140000" />
-      <workItem from="1787542031871" duration="11761000" />
+      <workItem from="1787542031871" duration="12916000" />
     </task>
     <task id="LOCAL-00001" summary="init setup">
       <option name="closed" value="true" />
@@ -467,7 +460,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787551106341</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="notification ok">
+      <option name="closed" value="true" />
+      <created>1787553854223</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1787553854223</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -505,7 +506,8 @@
     <MESSAGE value="readme udpated" />
     <MESSAGE value="setup notification" />
     <MESSAGE value="listerner for Notification" />
-    <option name="LAST_COMMIT_MESSAGE" value="listerner for Notification" />
+    <MESSAGE value="notification ok" />
+    <option name="LAST_COMMIT_MESSAGE" value="notification ok" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

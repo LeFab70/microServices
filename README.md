@@ -5,6 +5,13 @@ Projet d'apprentissage : plateforme e-commerce en microservices avec Spring Boot
 ## Architecture
 
 ```
+                                          ┌───────────────┐
+                             frontend --->│    gateway     │
+                          (à venir)       │    :8222       │
+                                          └───────┬───────┘
+                                                  │ routes explicites (Spring MVC, pas de discovery locator)
+                     ┌────────────┬───────────────┼───────────────┬────────────┐
+                     │            │               │               │            │
                          ┌───────────────┐   ┌───────────────┐
                          │  discovery    │   │  config-server│
                          │  (Eureka)     │   │               │
@@ -34,7 +41,7 @@ Projet d'apprentissage : plateforme e-commerce en microservices avec Spring Boot
                                                ▼ payment-topic   ▼
                                             (Kafka, ci-dessus)  mail-dev
 ```
-(`api-gateway` : à venir, point d'entrée unique pour le frontend Angular)
+(schéma simplifié — `gateway` route vers `customer`/`product`/`order`/`payment` via des routes déclarées explicitement, résolues par Eureka ; pas de frontend branché pour l'instant)
 
 Chaque service est enregistré auprès de `discovery` (Eureka) et récupère sa configuration depuis `config-server` au démarrage (`spring.config.import: optional:configserver:...`). `order-service` est l'orchestrateur : il ne connaît que les APIs publiques de `customer-service`/`product-service` (via OpenFeign), jamais leurs bases de données.
 
@@ -47,7 +54,7 @@ Chaque service est enregistré auprès de `discovery` (Eureka) et récupère sa 
 | Order (+ OrderLine) | `order-service` | ✅ fait — orchestrateur : Feign vers `customer`/`product`, réserve le stock via `POST /product/purchase`, publie un événement Kafka (`order-topic`) après création |
 | Payment | `payment-service` | ✅ fait — consomme `order-topic` (Kafka), persiste un instantané client + produits, publie `payment-topic` |
 | Notification | `notification-service` | ✅ fait — consomme `order-topic` + `payment-topic` (Kafka), trace en MongoDB, envoie un email (via `mail-dev`) |
-| API Gateway | `api-gateway` | 🚧 à créer — point d'entrée unique pour le frontend Angular |
+| API Gateway | `gateway-service` | ✅ fait — routes explicites vers `customer`/`product`/`order`/`payment` (Spring Cloud Gateway MVC, résolution `lb://` via Eureka) ; pas encore branché à un frontend |
 
 ## Services
 
@@ -60,6 +67,7 @@ Chaque service est enregistré auprès de `discovery` (Eureka) et récupère sa 
 | `order` | 8092 | PostgreSQL (`order-db`) | Commandes — orchestre `customer` + `product` via Feign |
 | `payment` | 8093 | PostgreSQL (`payment-db`) | Paiements — consomme `order-topic` (Kafka), publie `payment-topic` |
 | `notification` | 8094 | MongoDB (`notification-db`) | Notifications — consomme `order-topic`+`payment-topic`, envoie des emails via `mail-dev` |
+| `gateway` | 8222 | — | Point d'entrée HTTP unique — routes explicites vers `customer`/`product`/`order`/`payment` |
 
 Pas de `pom.xml` racine — chaque service est un module Maven indépendant, à builder/lancer séparément. Un README détaillé existe dans chaque `services/<nom>/README.md`.
 
@@ -129,6 +137,8 @@ Ce projet est un TP d'apprentissage — plusieurs sujets volontairement **non tr
 - **Pas de sécurité applicative** : aucun JWT, aucun Keycloak/OAuth2, aucune authentification ni autorisation sur les endpoints. Toutes les routes sont ouvertes publiquement.
 - **Pas de rate limiting** : aucune protection contre l'abus/spam d'un endpoint (pas de bucket4j, pas de throttling au niveau Gateway puisqu'il n'y a pas encore de Gateway).
 - **Observabilité minimale** : seul Spring Boot Actuator est présent (health checks basiques, `/actuator/health`), sur `config-server`/`customer`/`product`/`order`/`payment` — **pas** sur `discovery` ni `notification`. Pas de Grafana, pas de Prometheus, pas de dashboards de métriques. Le conteneur `zipkin` tourne dans `docker-compose.yml`, mais **aucun service n'a la dépendance de tracing** (`micrometer-tracing`/`zipkin-reporter`) — le conteneur est présent mais rien ne lui envoie de traces pour l'instant.
+- **Pas de WebFlux** : tous les services REST (`customer`/`product`/`order`/`payment`) utilisent Spring MVC classique (I/O bloquant, un thread par requête). Pas dimensionné pour un grand nombre de clients simultanés — un vrai besoin de scalabilité à fort trafic demanderait de repasser en réactif (WebFlux + driver Mongo/R2DBC réactifs).
+- **Pas de WebSocket / suivi de commande en temps réel** : le statut d'une commande (`OrderStatus`) ne peut être consulté qu'en interrogeant `GET /api/v1/orders/{id}` (polling côté client) — aucun push serveur→client. Un vrai suivi de commande en direct demanderait un canal WebSocket (ou SSE) sur `order-service`, probablement alimenté par les mêmes événements Kafka déjà publiés (`order-topic`/`payment-topic`).
 
 Si ce projet devait évoluer vers quelque chose de plus proche de la prod, ce sont les prochains sujets à traiter — pas juste API Gateway/Payment/Notification.
 
