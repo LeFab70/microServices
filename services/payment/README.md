@@ -2,7 +2,7 @@
 
 Microservice de paiement : consomme les commandes créées par `order-service` via Kafka, crée un paiement (avec un instantané figé du client et des produits), et publie une confirmation de paiement.
 
-> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Expose `/actuator/health` et `/actuator/prometheus` (scrapé par Prometheus/Grafana). Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
+> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Expose `/actuator/health` et `/actuator/prometheus` (scrapé par Prometheus/Grafana). Access log Tomcat activé (`logs/access_log.*.log` — IP client, méthode, URI, statut ; voir [README racine](../../README.md#observabilité-prometheus--grafana) pour le piège reverse-proxy via `gateway-service`). Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
 
 ## Stack
 

@@ -2,7 +2,7 @@
 
 Point d'entrée HTTP unique de la plateforme — route les requêtes entrantes vers `customer`/`product`/`order`/`payment` en résolvant leur adresse via Eureka (`lb://`).
 
-> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak. Le filtre Bucket4j (rate limiting) est disponible dans la dépendance mais **pas configuré**. Expose `/actuator/prometheus` (scrapé par Prometheus/Grafana). Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
+> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak. Le filtre Bucket4j (rate limiting) est disponible dans la dépendance mais **pas configuré**. Expose `/actuator/prometheus` (scrapé par Prometheus/Grafana). Access log Tomcat activé (`logs/access_log.*.log`) — c'est ici que l'IP **réelle** du client apparaît pour tout appel entrant via le Gateway ; les services en aval ne voient que l'IP du Gateway. Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
 
 ## Stack
 

@@ -114,7 +114,11 @@ Ou lancer chaque `*Application` depuis IntelliJ dans le même ordre — penser �
 
 ## Tester
 
-Une collection Postman est disponible avec des exemples pour les trois services (`customer`, `product`/`category`, `order`) — voir `resources/` ou demander la dernière version.
+Une collection Postman complète est disponible : [`resources/e-commerce-app2.postman_collection.json`](resources/e-commerce-app2.postman_collection.json). Elle couvre le CRUD complet (POST/GET/PUT/DELETE) de `category`, `product`, `customer`, `order`, `payment`, plus une section d'exemples via le Gateway.
+
+Import dans Postman : **Import → File** → sélectionner le fichier. Les requêtes de création (POST) capturent automatiquement l'id créé dans une variable de collection (`customer_id`, `category_id`, `product_id`, `order_id`, `payment_id`) pour l'injecter dans les requêtes suivantes — exécuter les dossiers dans l'ordre (1. Category → 2. Product → 3. Customer → 4. Order → 5. Payment → 6. Via Gateway) via le **Collection Runner**, ou manuellement l'un après l'autre.
+
+Chaque service a sa propre variable d'URL (`customer_url`, `product_url`, etc., par défaut sur ses ports directs) ; `gateway_url` (`8222`) est utilisé par la section "Via Gateway".
 
 Exemple de création de commande (`order-service`, en direct) :
 ```bash
@@ -151,6 +155,21 @@ Chaque service expose `/actuator/prometheus` (nécessite d'avoir été redémarr
 - Grafana : http://localhost:3000 (`admin`/`admin`) — ajouter Prometheus comme datasource : `http://prometheus:9090`
 
 Chaque métrique est taguée `application=<nom-du-service>` (configuré via `management.metrics.tags.application` dans chaque `*-service.yml` sur `config-server`) pour pouvoir filtrer/grouper par service dans Grafana.
+
+Le dashboard **JVM (Micrometer)** (importé dans Grafana, ID `4701`) a une section additionnelle **HTTP Endpoints** avec le débit et le total de requêtes par `method`/`uri`/`status`, filtrable par service via le sélecteur `Application` en haut du dashboard.
+
+### Adresse IP du client : logs d'accès Tomcat, pas Prometheus
+
+Prometheus est volontairement inadapté pour ça : chaque valeur de label crée une série temporelle distincte, et une IP client a une cardinalité potentiellement illimitée (autant de séries que de clients différents) — c'est un anti-pattern qui ferait exploser le stockage. Pour voir *quelle IP* a fait une requête, il faut les **logs d'accès**, pas les métriques.
+
+`customer`/`product`/`order`/`payment`/`gateway-service` ont le **access log Valve de Tomcat** activé (`server.tomcat.accesslog.*` dans leur config sur `config-server`) — chaque requête HTTP est écrite dans `services/<nom>/logs/access_log.<date>.log` :
+```
+192.168.1.42 - - [24/Aug/2026:04:20:11] "GET /api/v1/customer HTTP/1.1" 200 512 14 ms
+```
+
+⚠️ **Piège reverse-proxy** : une requête passée par `gateway-service` (port `8222`) montrera l'IP du **Gateway** dans les logs du service cible, pas celle du client d'origine — c'est le comportement normal d'un reverse-proxy sans propagation d'en-tête (`X-Forwarded-For`), non configurée ici. Pour voir la vraie IP du client, regarder le log d'accès du service réellement contacté en premier (le Gateway si l'appel passe par lui, sinon le service direct).
+
+Ces logs ne sont pas branchés dans Grafana — un pipeline de logs centralisé (Loki + Promtail par exemple) serait nécessaire pour les requêter depuis l'UI, volontairement hors scope de ce projet.
 
 ## ⚠️ Limitations / hors scope de ce projet
 
