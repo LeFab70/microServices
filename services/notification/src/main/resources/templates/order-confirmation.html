@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>Bonjour <span th:text="${customerName}"></span></h2>
+
+<p>
+    Votre commande
+    <strong th:text="${orderReference}"></strong>
+    a bien été enregistrée.
+</p>
+
+<p>
+    Montant total :
+    <strong th:text="${totalAmount}"></strong>
+</p>
+
+<p>
+    Merci pour votre confiance.
+</p>
+
+</body>
+</html>

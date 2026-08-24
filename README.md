@@ -1,6 +1,6 @@
 # e-commerce-app2
 
-Projet  : plateforme e-commerce en microservices avec Spring Boot 4 / Spring Cloud.
+Projet d'apprentissage : plateforme e-commerce en microservices avec Spring Boot 4 / Spring Cloud.
 
 ## Architecture
 
@@ -13,15 +13,28 @@ Projet  : plateforme e-commerce en microservices avec Spring Boot 4 / Spring Clo
                                  ▲                    ▲
                      ┌───────────┼────────────────────┼───────────┐
                      │           │                    │           │
-              ┌──────┴─────┐  ┌──┴─────────┐   ┌──────┴─────┐   ┌────────────┐  (à venir)
-              │ customer   │  │ product    │   │ order      │──▶│ payment    │  notification
-              │ :8090      │  │ :8091      │◄──┤ :8092      │   │ :8093      │  api-gateway
-              │ MongoDB    │  │ PostgreSQL │   │ PostgreSQL │   │ PostgreSQL │
-              └────────────┘  └────────────┘   └─────┬──────┘   └────────────┘
-                     ▲                                │        (Kafka, order-topic)
-                     └────────────────────────────────┘
-                          appels Feign (customer + product)
+              ┌──────┴─────┐  ┌──┴─────────┐   ┌──────┴─────┐
+              │ customer   │  │ product    │   │ order      │
+              │ :8090      │  │ :8091      │◄──┤ :8092      │
+              │ MongoDB    │  │ PostgreSQL │   │ PostgreSQL │
+              └──────▲─────┘  └────────────┘   └─────┬──────┘
+                     │           appels Feign         │ publie order-topic
+                     └────────────(customer+product)  ▼
+                                                 ┌────────────┐
+                                                 │   Kafka    │
+                                                 └──┬──────┬──┘
+                                     order-topic    │      │  order-topic + payment-topic
+                                                     ▼      ▼
+                                         ┌────────────┐  ┌──────────────┐
+                                         │ payment    │  │ notification │
+                                         │ :8093      │  │ :8094        │
+                                         │ PostgreSQL │  │ MongoDB      │
+                                         └─────┬──────┘  └──────┬───────┘
+                                               │ publie          │ SMTP
+                                               ▼ payment-topic   ▼
+                                            (Kafka, ci-dessus)  mail-dev
 ```
+(`api-gateway` : à venir, point d'entrée unique pour le frontend Angular)
 
 Chaque service est enregistré auprès de `discovery` (Eureka) et récupère sa configuration depuis `config-server` au démarrage (`spring.config.import: optional:configserver:...`). `order-service` est l'orchestrateur : il ne connaît que les APIs publiques de `customer-service`/`product-service` (via OpenFeign), jamais leurs bases de données.
 
@@ -33,7 +46,7 @@ Chaque service est enregistré auprès de `discovery` (Eureka) et récupère sa 
 | Product (+ Category) | `product-service` | ✅ fait |
 | Order (+ OrderLine) | `order-service` | ✅ fait — orchestrateur : Feign vers `customer`/`product`, réserve le stock via `POST /product/purchase`, publie un événement Kafka (`order-topic`) après création |
 | Payment | `payment-service` | ✅ fait — consomme `order-topic` (Kafka), persiste un instantané client + produits, publie `payment-topic` |
-| Notification | `notification-service` | 🚧 à créer — probablement déclenché en asynchrone via Kafka après un paiement confirmé |
+| Notification | `notification-service` | ✅ fait — consomme `order-topic` + `payment-topic` (Kafka), trace en MongoDB, envoie un email (via `mail-dev`) |
 | API Gateway | `api-gateway` | 🚧 à créer — point d'entrée unique pour le frontend Angular |
 
 ## Services
@@ -46,6 +59,7 @@ Chaque service est enregistré auprès de `discovery` (Eureka) et récupère sa 
 | `product` | 8091 | PostgreSQL (`product-db`) | Catalogue produit, catégories, stock, achat |
 | `order` | 8092 | PostgreSQL (`order-db`) | Commandes — orchestre `customer` + `product` via Feign |
 | `payment` | 8093 | PostgreSQL (`payment-db`) | Paiements — consomme `order-topic` (Kafka), publie `payment-topic` |
+| `notification` | 8094 | MongoDB (`notification-db`) | Notifications — consomme `order-topic`+`payment-topic`, envoie des emails via `mail-dev` |
 
 Pas de `pom.xml` racine — chaque service est un module Maven indépendant, à builder/lancer séparément. Un README détaillé existe dans chaque `services/<nom>/README.md`.
 
@@ -61,7 +75,7 @@ docker compose up -d
 | `pgadmin` | 5050 | UI d'admin PostgreSQL |
 | `mongodb` | 27018 → 27017 | Base `customer-db` (port décalé pour éviter le conflit avec un MongoDB local) |
 | `mongo-express` | 8081 | UI d'admin MongoDB |
-| `kafka` / `zookeeper` | 9092 / 22181 | Messagerie événementielle (prévu pour `notification-service`) |
+| `kafka` / `zookeeper` | 9092 (interne conteneurs) / 29092 (hôte) / 22181 | Messagerie événementielle — `order-topic`, `payment-topic`, consommés par `payment`/`notification` |
 | `mail-dev` | 1080 (UI), 1025 (SMTP) | Serveur mail de dev, pour tester les emails de confirmation |
 | `zipkin` | 9411 | Traçage distribué |
 
@@ -79,6 +93,7 @@ cd services/customer && mvn spring-boot:run &
 cd services/product && mvn spring-boot:run &
 cd services/order && mvn spring-boot:run &
 cd services/payment && mvn spring-boot:run &
+cd services/notification && mvn spring-boot:run &
 ```
 
 Ou lancer chaque `*Application` depuis IntelliJ dans le même ordre — penser à activer **"Single instance only"** sur chaque Run Configuration pour éviter les conflits de port en cas de double lancement.
@@ -113,7 +128,7 @@ Ce projet est un TP d'apprentissage — plusieurs sujets volontairement **non tr
 
 - **Pas de sécurité applicative** : aucun JWT, aucun Keycloak/OAuth2, aucune authentification ni autorisation sur les endpoints. Toutes les routes sont ouvertes publiquement.
 - **Pas de rate limiting** : aucune protection contre l'abus/spam d'un endpoint (pas de bucket4j, pas de throttling au niveau Gateway puisqu'il n'y a pas encore de Gateway).
-- **Observabilité minimale** : seul Spring Boot Actuator est présent (health checks basiques, `/actuator/health`), sur `config-server`/`customer`/`product`/`order`/`payment` — **pas** sur `discovery`. Pas de Grafana, pas de Prometheus, pas de dashboards de métriques. Le conteneur `zipkin` tourne dans `docker-compose.yml`, mais **aucun service n'a la dépendance de tracing** (`micrometer-tracing`/`zipkin-reporter`) — le conteneur est présent mais rien ne lui envoie de traces pour l'instant.
+- **Observabilité minimale** : seul Spring Boot Actuator est présent (health checks basiques, `/actuator/health`), sur `config-server`/`customer`/`product`/`order`/`payment` — **pas** sur `discovery` ni `notification`. Pas de Grafana, pas de Prometheus, pas de dashboards de métriques. Le conteneur `zipkin` tourne dans `docker-compose.yml`, mais **aucun service n'a la dépendance de tracing** (`micrometer-tracing`/`zipkin-reporter`) — le conteneur est présent mais rien ne lui envoie de traces pour l'instant.
 
 Si ce projet devait évoluer vers quelque chose de plus proche de la prod, ce sont les prochains sujets à traiter — pas juste API Gateway/Payment/Notification.
 
@@ -122,9 +137,11 @@ Si ce projet devait évoluer vers quelque chose de plus proche de la prod, ce so
 - Java 25, Spring Boot 4.1.0, Spring Cloud 2025.1.2
 - Spring Cloud Config + Netflix Eureka (service discovery)
 - OpenFeign (communication inter-services, ex: `order` → `customer`/`product`)
-- Spring Data MongoDB (`customer`) / Spring Data JPA + Flyway (`product`, `order`)
+- Spring Data MongoDB (`customer`, `notification`) / Spring Data JPA + Flyway (`product`, `order`, `payment`)
+- Spring Kafka (`order` → producteur ; `payment`/`notification` → consommateurs+producteur)
+- Spring Mail + Thymeleaf (`notification`, emails via `mail-dev`)
 - MapStruct (mapping entité ↔ DTO), Lombok
-- springdoc-openapi (Swagger sur les 3 services métier)
+- springdoc-openapi (Swagger sur `customer`/`product`/`order`)
 - Docker Compose pour l'infra (PostgreSQL, MongoDB, Kafka, mail-dev, Zipkin)
 
 ## Documentation par service
@@ -135,3 +152,4 @@ Si ce projet devait évoluer vers quelque chose de plus proche de la prod, ce so
 - [services/product/README.md](services/product/README.md)
 - [services/order/README.md](services/order/README.md)
 - [services/payment/README.md](services/payment/README.md)
+- [services/notification/README.md](services/notification/README.md)

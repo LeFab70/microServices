@@ -2,6 +2,7 @@ package org.lefab.notification.kafka.consumers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.lefab.notification.email.EmailService;
 import org.lefab.notification.entities.Notification;
 import org.lefab.notification.enums.NotificationType;
 import org.lefab.notification.kafka.OrderConfirmation;
@@ -18,10 +19,12 @@ import java.time.LocalDateTime;
 public class NotificationConsumer {
 
     private final NotificationRepository notificationRepository;
+    private final EmailService emailService;
 
     @KafkaListener(
             topics = "order-topic",
-            groupId = "notification-group"
+            groupId = "notification-group",
+            containerFactory = "orderConfirmationKafkaListenerContainerFactory"
     )
     public void consumeOrderConfirmation(
             OrderConfirmation orderConfirmation
@@ -42,12 +45,18 @@ public class NotificationConsumer {
                         .build();
 
         notificationRepository.save(notification);
-        //Todo: send email
+        emailService.sendOrderConfirmationEmail(
+                orderConfirmation.customerSummaryDto().email(),
+                orderConfirmation.customerSummaryDto().firstName() + " " + orderConfirmation.customerSummaryDto().lastName(),
+                orderConfirmation.orderReference(),
+                orderConfirmation.totalAmount()
+        );
     }
 
     @KafkaListener(
             topics = "payment-topic",
-            groupId = "notification-group"
+            groupId = "notification-group",
+            containerFactory = "paymentConfirmationKafkaListenerContainerFactory"
     )
     public void consumePaymentConfirmation(
             PaymentConfirmation paymentConfirmation
@@ -68,6 +77,12 @@ public class NotificationConsumer {
                         .build();
 
         notificationRepository.save(notification);
-        //Todo: send email
+        emailService.sendPaymentSuccessEmail(
+                paymentConfirmation.customer().email(),
+                paymentConfirmation.orderReference(),
+                paymentConfirmation.amount(),
+                paymentConfirmation.customer().firstName() + " " + paymentConfirmation.customer().lastName()
+
+        );
     }
 }

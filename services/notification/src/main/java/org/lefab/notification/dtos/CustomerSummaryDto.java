@@ -6,8 +6,9 @@ public record CustomerSummaryDto(
 
         String firstName,
 
-        String lastName
+        String lastName,
+
+        String email
 
 ) {
 }
-

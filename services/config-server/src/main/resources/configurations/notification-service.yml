@@ -1,0 +1,35 @@
+spring:
+  mongodb:
+    username: fab
+    password: fab
+    host: localhost
+    port: 27018
+    authentication-database: admin
+    database: notification-db
+
+  kafka:
+    bootstrap-servers: localhost:29092
+
+    # value-deserializer volontairement absent ici : chaque @KafkaListener utilise
+    # sa propre ConsumerFactory dédiée (voir KafkaConsumerConfig), car ce service
+    # consomme deux types de messages différents (order-topic / payment-topic).
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+  mail:
+    host: localhost
+    port: 1025
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+          auth: false
+          starttls:
+            enabled: false
+
+server:
+  port: 8094
