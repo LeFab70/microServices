@@ -21,11 +21,8 @@ public class Notification {
     @Id
 
     private String id;
-    private LocalDateTime NotificationTime;
-
-    @Builder.Default
-    private NotificationType notificationType= NotificationType.ORDER_CONFIRMATION;
-
+    private LocalDateTime notificationTime;
+    private NotificationType notificationType;
     private OrderConfirmation orderConfirmation;
     private PaymentConfirmation paymentConfirmation;
 }
