@@ -11,6 +11,7 @@ import org.lefab.order.order.dtos.CustomerSummaryDto;
 import org.lefab.order.order.dtos.OrderRequestDto;
 import org.lefab.order.order.dtos.OrderResponseDto;
 import org.lefab.order.order.entities.OrderEntity;
+import org.lefab.order.order.exceptions.OrderNotFoundException;
 import org.lefab.order.order.mapper.OrderMapper;
 import org.lefab.order.order.repositories.OrderRepository;
 import org.lefab.order.orderItem.dtos.OrderLineRequestDto;
@@ -59,6 +60,13 @@ public class OrderServices {
         );
     }
 
+
+    @Transactional(readOnly = true)
+    public OrderResponseDto getOrderById(Long id){
+       return orderMapper.toResponse(orderRepository.findById(id).orElseThrow(
+               ()->new OrderNotFoundException("Order not found with id: "+id)
+       ));
+    }
 
 
     @Transactional
@@ -126,6 +134,7 @@ public class OrderServices {
                 .status(saved.getOrderStatus())
                 .productPurchases(purchased)
                 .build();
+        //propager l'order sur Kafka'
         orderProducer.sendOrderConfirmation(orderConfirmation);
 
         return new OrderResponseDto(mapped.id(), mapped.orderDate(), mapped.lastUpdate(), mapped.reference(), mapped.status(), customer, lines);

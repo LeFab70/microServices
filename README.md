@@ -97,8 +97,13 @@ curl -X POST http://localhost:8092/api/v1/orders \
 
 ## Documentation API
 
-- `product-service` publie une doc Swagger : http://localhost:8091/swagger-ui/index.html
-- `customer-service`/`order-service` n'en ont pas encore.
+Les trois services métier publient une doc Swagger :
+
+| Service | Swagger UI |
+|---|---|
+| `customer-service` | http://localhost:8090/swagger-ui/index.html |
+| `product-service` | http://localhost:8091/swagger-ui/index.html |
+| `order-service` | http://localhost:8092/swagger-ui/index.html |
 
 ## Stack technique
 
@@ -107,7 +112,7 @@ curl -X POST http://localhost:8092/api/v1/orders \
 - OpenFeign (communication inter-services, ex: `order` → `customer`/`product`)
 - Spring Data MongoDB (`customer`) / Spring Data JPA + Flyway (`product`, `order`)
 - MapStruct (mapping entité ↔ DTO), Lombok
-- springdoc-openapi (Swagger, `product-service` uniquement pour l'instant)
+- springdoc-openapi (Swagger sur les 3 services métier)
 - Docker Compose pour l'infra (PostgreSQL, MongoDB, Kafka, mail-dev, Zipkin)
 
 ## Documentation par service

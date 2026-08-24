@@ -10,6 +10,7 @@ Microservice orchestrateur : crée une commande (`Order` + `OrderLine`) en valid
 - Spring Kafka (`spring-kafka` + `spring-boot-starter-kafka` — les deux sont nécessaires en Spring Boot 4, l'auto-configuration a été séparée de la librairie de base)
 - MapStruct pour le mapping entité ↔ DTO
 - Spring Cloud Config (config-server) + Eureka (discovery)
+- springdoc-openapi (Swagger UI)
 
 ## Prérequis
 
@@ -34,6 +35,11 @@ mvn spring-boot:run
 ```
 
 Port **8092**. Flyway applique les migrations automatiquement au démarrage.
+
+## Documentation API (Swagger)
+
+- Swagger UI : http://localhost:8092/swagger-ui/index.html
+- OpenAPI JSON : http://localhost:8092/v3/api-docs
 
 ## Endpoints (`/api/v1/orders`)
 

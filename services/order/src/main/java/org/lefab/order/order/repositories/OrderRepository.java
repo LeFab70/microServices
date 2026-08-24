@@ -9,10 +9,10 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
-    @Query("""
-       SELECT DISTINCT o
-       FROM OrderEntity o
-       LEFT JOIN FETCH o.orderLine
-       """)
-    List<OrderEntity> findAllWithLines();
+//    @Query("""
+//       SELECT DISTINCT o
+//       FROM OrderEntity o
+//       LEFT JOIN FETCH o.orderLine
+//       """)
+//    List<OrderEntity> findAllWithLines();
 }

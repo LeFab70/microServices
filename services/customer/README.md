@@ -8,6 +8,7 @@ Microservice responsable des clients (`Customer`) et de leur adresse (`Address`,
 - Spring Data MongoDB
 - MapStruct pour le mapping entité ↔ DTO
 - Spring Cloud Config (config-server) + Eureka (discovery)
+- springdoc-openapi (Swagger UI)
 
 ## Prérequis
 
@@ -31,6 +32,11 @@ mvn spring-boot:run
 ```
 
 Port **8090**.
+
+## Documentation API (Swagger)
+
+- Swagger UI : http://localhost:8090/swagger-ui/index.html
+- OpenAPI JSON : http://localhost:8090/v3/api-docs
 
 ## Endpoints (`/api/v1/customer`)
 
