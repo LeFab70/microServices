@@ -37,6 +37,16 @@ public class PaymentEntity {
     private String orderReference;
     private BigDecimal amount;
 
+    @Column(name = "customer_id", nullable = false)
+    private String customerId;
+    @Column(name = "customer_first_name", nullable = false)
+    private String customerFirstName;
+    @Column(name = "customer_last_name", nullable = false)
+    private String customerLastName;
+
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PaymentItemEntity> items;
+
     @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

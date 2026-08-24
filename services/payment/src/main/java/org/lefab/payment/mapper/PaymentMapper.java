@@ -6,7 +6,7 @@ import org.lefab.payment.entities.PaymentEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {PaymentItemMapper.class})
 public interface PaymentMapper {
 
     @Mapping(target = "id", ignore = true)
@@ -18,5 +18,6 @@ public interface PaymentMapper {
     @Mapping(target = "paymentId", source = "id")
     @Mapping(target = "status", source = "paymentStatus")
     @Mapping(target = "orderReference", source = "orderReference")
+    @Mapping(target = "customer", ignore = true)
     PaymentResponseDto toResponse(PaymentEntity entity);
 }

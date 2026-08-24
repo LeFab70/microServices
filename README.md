@@ -13,12 +13,12 @@ Projet  : plateforme e-commerce en microservices avec Spring Boot 4 / Spring Clo
                                  ▲                    ▲
                      ┌───────────┼────────────────────┼───────────┐
                      │           │                    │           │
-              ┌──────┴─────┐  ┌──┴─────────┐   ┌──────┴─────┐  (à venir)
-              │ customer   │  │ product    │   │ order      │  payment
-              │ :8090      │  │ :8091      │◄──┤ :8092      │  notification
-              │ MongoDB    │  │ PostgreSQL │   │ PostgreSQL │  api-gateway
-              └────────────┘  └────────────┘   └─────┬──────┘
-                     ▲                                │
+              ┌──────┴─────┐  ┌──┴─────────┐   ┌──────┴─────┐   ┌────────────┐  (à venir)
+              │ customer   │  │ product    │   │ order      │──▶│ payment    │  notification
+              │ :8090      │  │ :8091      │◄──┤ :8092      │   │ :8093      │  api-gateway
+              │ MongoDB    │  │ PostgreSQL │   │ PostgreSQL │   │ PostgreSQL │
+              └────────────┘  └────────────┘   └─────┬──────┘   └────────────┘
+                     ▲                                │        (Kafka, order-topic)
                      └────────────────────────────────┘
                           appels Feign (customer + product)
 ```
@@ -32,8 +32,8 @@ Chaque service est enregistré auprès de `discovery` (Eureka) et récupère sa 
 | Customer (+ Address) | `customer-service` | ✅ fait |
 | Product (+ Category) | `product-service` | ✅ fait |
 | Order (+ OrderLine) | `order-service` | ✅ fait — orchestrateur : Feign vers `customer`/`product`, réserve le stock via `POST /product/purchase`, publie un événement Kafka (`order-topic`) après création |
-| Payment | `payment-service` | 🚧 à créer |
-| Notification | `notification-service` | 🚧 à créer — probablement déclenché en asynchrone via Kafka après un achat confirmé |
+| Payment | `payment-service` | ✅ fait — consomme `order-topic` (Kafka), persiste un instantané client + produits, publie `payment-topic` |
+| Notification | `notification-service` | 🚧 à créer — probablement déclenché en asynchrone via Kafka après un paiement confirmé |
 | API Gateway | `api-gateway` | 🚧 à créer — point d'entrée unique pour le frontend Angular |
 
 ## Services
@@ -45,6 +45,7 @@ Chaque service est enregistré auprès de `discovery` (Eureka) et récupère sa 
 | `customer` | 8090 | MongoDB (`customer-db`) | Gestion des clients (imbrique `Address`) |
 | `product` | 8091 | PostgreSQL (`product-db`) | Catalogue produit, catégories, stock, achat |
 | `order` | 8092 | PostgreSQL (`order-db`) | Commandes — orchestre `customer` + `product` via Feign |
+| `payment` | 8093 | PostgreSQL (`payment-db`) | Paiements — consomme `order-topic` (Kafka), publie `payment-topic` |
 
 Pas de `pom.xml` racine — chaque service est un module Maven indépendant, à builder/lancer séparément. Un README détaillé existe dans chaque `services/<nom>/README.md`.
 
@@ -77,6 +78,7 @@ cd services/config-server && mvn spring-boot:run &
 cd services/customer && mvn spring-boot:run &
 cd services/product && mvn spring-boot:run &
 cd services/order && mvn spring-boot:run &
+cd services/payment && mvn spring-boot:run &
 ```
 
 Ou lancer chaque `*Application` depuis IntelliJ dans le même ordre — penser à activer **"Single instance only"** sur chaque Run Configuration pour éviter les conflits de port en cas de double lancement.
@@ -97,13 +99,23 @@ curl -X POST http://localhost:8092/api/v1/orders \
 
 ## Documentation API
 
-Les trois services métier publient une doc Swagger :
+Trois services métier publient une doc Swagger (pas encore fait sur `payment-service`) :
 
 | Service | Swagger UI |
 |---|---|
 | `customer-service` | http://localhost:8090/swagger-ui/index.html |
 | `product-service` | http://localhost:8091/swagger-ui/index.html |
 | `order-service` | http://localhost:8092/swagger-ui/index.html |
+
+## ⚠️ Limitations / hors scope de ce projet
+
+Ce projet est un TP d'apprentissage — plusieurs sujets volontairement **non traités**, à garder en tête :
+
+- **Pas de sécurité applicative** : aucun JWT, aucun Keycloak/OAuth2, aucune authentification ni autorisation sur les endpoints. Toutes les routes sont ouvertes publiquement.
+- **Pas de rate limiting** : aucune protection contre l'abus/spam d'un endpoint (pas de bucket4j, pas de throttling au niveau Gateway puisqu'il n'y a pas encore de Gateway).
+- **Observabilité minimale** : seul Spring Boot Actuator est présent (health checks basiques, `/actuator/health`), sur `config-server`/`customer`/`product`/`order`/`payment` — **pas** sur `discovery`. Pas de Grafana, pas de Prometheus, pas de dashboards de métriques. Le conteneur `zipkin` tourne dans `docker-compose.yml`, mais **aucun service n'a la dépendance de tracing** (`micrometer-tracing`/`zipkin-reporter`) — le conteneur est présent mais rien ne lui envoie de traces pour l'instant.
+
+Si ce projet devait évoluer vers quelque chose de plus proche de la prod, ce sont les prochains sujets à traiter — pas juste API Gateway/Payment/Notification.
 
 ## Stack technique
 
@@ -122,3 +134,4 @@ Les trois services métier publient une doc Swagger :
 - [services/customer/README.md](services/customer/README.md)
 - [services/product/README.md](services/product/README.md)
 - [services/order/README.md](services/order/README.md)
+- [services/payment/README.md](services/payment/README.md)

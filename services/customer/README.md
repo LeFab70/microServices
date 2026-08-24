@@ -2,6 +2,8 @@
 
 Microservice responsable des clients (`Customer`) et de leur adresse (`Address`, imbriquée dans le document Mongo — pas une collection séparée).
 
+> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Juste Actuator (`/actuator/health`), pas de Grafana/Prometheus. Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
+
 ## Stack
 
 - Java 25, Spring Boot 4.1.0, Spring Cloud 2025.1.2

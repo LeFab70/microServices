@@ -2,6 +2,8 @@
 
 Microservice orchestrateur : crée une commande (`Order` + `OrderLine`) en validant le client et en réservant le stock auprès des autres services, via OpenFeign + Eureka (aucune URL codée en dur), puis publie un événement Kafka pour les futurs `payment-service`/`notification-service`.
 
+> ⚠️ Endpoints ouverts publiquement — pas de JWT/Keycloak, pas de rate limiting. Juste Actuator (`/actuator/health`), pas de Grafana/Prometheus. Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
+
 ## Stack
 
 - Java 25, Spring Boot 4.1.0, Spring Cloud 2025.1.2

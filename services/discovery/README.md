@@ -2,6 +2,8 @@
 
 Serveur Eureka — annuaire de services pour toute la plateforme. Chaque microservice s'y enregistre au démarrage et l'interroge pour localiser les autres services (utilisé par Spring Cloud LoadBalancer / OpenFeign).
 
+> ⚠️ Pas de JWT/Keycloak, pas de rate limiting, pas d'Actuator ici, pas de Grafana/Prometheus. Détails dans le [README racine](../../README.md#️-limitations--hors-scope-de-ce-projet).
+
 ## Stack
 
 - Java 25, Spring Boot 4.1.0, Spring Cloud 2025.1.2
