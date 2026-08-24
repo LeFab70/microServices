@@ -102,6 +102,9 @@ cd services/product && mvn spring-boot:run &
 cd services/order && mvn spring-boot:run &
 cd services/payment && mvn spring-boot:run &
 cd services/notification && mvn spring-boot:run &
+
+# attendre que customer/product/order/payment soient enregistrés dans Eureka avant de lancer gateway
+cd services/gateway && mvn spring-boot:run &
 ```
 
 Ou lancer chaque `*Application` depuis IntelliJ dans le même ordre — penser à activer **"Single instance only"** sur chaque Run Configuration pour éviter les conflits de port en cas de double lancement.
@@ -110,7 +113,7 @@ Ou lancer chaque `*Application` depuis IntelliJ dans le même ordre — penser �
 
 Une collection Postman est disponible avec des exemples pour les trois services (`customer`, `product`/`category`, `order`) — voir `resources/` ou demander la dernière version.
 
-Exemple de création de commande (`order-service`) :
+Exemple de création de commande (`order-service`, en direct) :
 ```bash
 curl -X POST http://localhost:8092/api/v1/orders \
   -H "Content-Type: application/json" \
@@ -118,6 +121,13 @@ curl -X POST http://localhost:8092/api/v1/orders \
     "customerId": "<id client existant>",
     "orderLines": [{ "productId": 1, "quantity": 2 }]
   }'
+```
+
+Même appel via le Gateway (port `8222`, chemin identique — le Gateway ne réécrit pas le path) :
+```bash
+curl -X POST http://localhost:8222/api/v1/orders \
+  -H "Content-Type: application/json" \
+  -d '{ "customerId": "<id client existant>", "orderLines": [{ "productId": 1, "quantity": 2 }] }'
 ```
 
 ## Documentation API
@@ -135,7 +145,7 @@ Trois services métier publient une doc Swagger (pas encore fait sur `payment-se
 Ce projet est un TP d'apprentissage — plusieurs sujets volontairement **non traités**, à garder en tête :
 
 - **Pas de sécurité applicative** : aucun JWT, aucun Keycloak/OAuth2, aucune authentification ni autorisation sur les endpoints. Toutes les routes sont ouvertes publiquement.
-- **Pas de rate limiting** : aucune protection contre l'abus/spam d'un endpoint (pas de bucket4j, pas de throttling au niveau Gateway puisqu'il n'y a pas encore de Gateway).
+- **Pas de rate limiting** : aucune protection contre l'abus/spam d'un endpoint. `gateway-service` embarque le filtre Bucket4j de Spring Cloud Gateway (disponible dans la dépendance), mais **aucune limite n'est configurée** pour l'instant.
 - **Observabilité minimale** : seul Spring Boot Actuator est présent (health checks basiques, `/actuator/health`), sur `config-server`/`customer`/`product`/`order`/`payment` — **pas** sur `discovery` ni `notification`. Pas de Grafana, pas de Prometheus, pas de dashboards de métriques. Le conteneur `zipkin` tourne dans `docker-compose.yml`, mais **aucun service n'a la dépendance de tracing** (`micrometer-tracing`/`zipkin-reporter`) — le conteneur est présent mais rien ne lui envoie de traces pour l'instant.
 - **Pas de WebFlux** : tous les services REST (`customer`/`product`/`order`/`payment`) utilisent Spring MVC classique (I/O bloquant, un thread par requête). Pas dimensionné pour un grand nombre de clients simultanés — un vrai besoin de scalabilité à fort trafic demanderait de repasser en réactif (WebFlux + driver Mongo/R2DBC réactifs).
 - **Pas de WebSocket / suivi de commande en temps réel** : le statut d'une commande (`OrderStatus`) ne peut être consulté qu'en interrogeant `GET /api/v1/orders/{id}` (polling côté client) — aucun push serveur→client. Un vrai suivi de commande en direct demanderait un canal WebSocket (ou SSE) sur `order-service`, probablement alimenté par les mêmes événements Kafka déjà publiés (`order-topic`/`payment-topic`).
@@ -146,6 +156,7 @@ Si ce projet devait évoluer vers quelque chose de plus proche de la prod, ce so
 
 - Java 25, Spring Boot 4.1.0, Spring Cloud 2025.1.2
 - Spring Cloud Config + Netflix Eureka (service discovery)
+- Spring Cloud Gateway MVC (`spring-cloud-starter-gateway-server-webmvc`) — routes déclarées explicitement, pas de discovery locator (fonctionnalité propre à la variante WebFlux, absente ici)
 - OpenFeign (communication inter-services, ex: `order` → `customer`/`product`)
 - Spring Data MongoDB (`customer`, `notification`) / Spring Data JPA + Flyway (`product`, `order`, `payment`)
 - Spring Kafka (`order` → producteur ; `payment`/`notification` → consommateurs+producteur)
@@ -163,3 +174,4 @@ Si ce projet devait évoluer vers quelque chose de plus proche de la prod, ce so
 - [services/order/README.md](services/order/README.md)
 - [services/payment/README.md](services/payment/README.md)
 - [services/notification/README.md](services/notification/README.md)
+- [services/gateway/README.md](services/gateway/README.md)
