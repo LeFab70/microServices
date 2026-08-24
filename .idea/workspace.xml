@@ -4,26 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b91e0875-2cb2-4108-b3c5-438961eb91ce" name="Changes" comment="payement service setup and kafka">
-      <change afterPath="$PROJECT_DIR$/services/product/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/ProductApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/category/controllers/CategoryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/category/services/CategoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/src/main/java/org/lefab/product/config/OpenApiConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/product/src/test/java/org/lefab/product/ProductApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+    <list default="true" id="b91e0875-2cb2-4108-b3c5-438961eb91ce" name="Changes" comment="readme udpated">
+      <change afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/dtos/CustomerSummaryDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/dtos/ProductSummaryDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/enums/NotificationType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/enums/OrderStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/enums/PaymentMethod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/enums/PaymentStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/kafka/OrderConfirmation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/kafka/PaymentConfirmation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/google-java-format.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/google-java-format.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/e-commerce-app2.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/entities/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/notification/src/main/java/org/lefab/notification/entities/Notification.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,10 +30,10 @@
       <list>
         <option value="com.intellij.jpb.JpaEntity" />
         <option value="Exception" />
-        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
         <option value="Record" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -74,54 +69,54 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose.yml.kafka-ui: Compose Deployment.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.ConfigServerApplication.executor": "Run",
-    "Spring Boot.CustomerApplication.executor": "Run",
-    "Spring Boot.DiscoveryApplication.executor": "Run",
-    "Spring Boot.OrderApplication.executor": "Run",
-    "Spring Boot.PaymentApplication.executor": "Run",
-    "Spring Boot.ProductApplication.executor": "Run",
-    "git-widget-placeholder": "ecommerce",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/fabricekouonang/Documents/springBootWebsocket/reviewsSpringBoot/e-commerce-app2/services/payment/src/main/java/org/lefab/payment",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.yml.kafka-ui: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ConfigServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.CustomerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.DiscoveryApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.OrderApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PaymentApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ProductApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ecommerce&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/fabricekouonang/Documents/springBootWebsocket/reviewsSpringBoot/e-commerce-app2/services/payment/src/main/java/org/lefab/payment&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.lefab.notification.enums" />
+      <recent name="org.lefab.notification.dtos" />
+      <recent name="org.lefab.notification.kafka" />
       <recent name="org.lefab.order.kafka" />
       <recent name="org.lefab.order.order.services" />
-      <recent name="org.lefab.order.orderItem.dtos" />
-      <recent name="org.lefab.order.order.dtos" />
-      <recent name="org.lefab.order.order.enums" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/services/payment/src/main/java/org/lefab/payment" />
@@ -154,7 +149,7 @@
         <entry key="SpringBootApplicationConfigurationType">
           <value>
             <map>
-              <entry key="ConfigServerApplication" value="FAILED" />
+              <entry key="ConfigServerApplication" value="STOPPED" />
               <entry key="CustomerApplication" value="STOPPED" />
               <entry key="DiscoveryApplication" value="STOPPED" />
               <entry key="OrderApplication" value="STOPPED" />
@@ -184,6 +179,13 @@
     <configuration name="DiscoveryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="discovery" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.lefab.discovery.DiscoveryApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NotificationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="notification" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.lefab.notification.NotificationApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -238,6 +240,7 @@
     </configuration>
     <list>
       <item itemvalue="Docker.docker-compose.yml.kafka-ui: Compose Deployment" />
+      <item itemvalue="Spring Boot.NotificationApplication" />
       <item itemvalue="Spring Boot.PaymentApplication" />
       <item itemvalue="Spring Boot.OrderApplication" />
       <item itemvalue="Spring Boot.ConfigServerApplication" />
@@ -274,7 +277,7 @@
       <workItem from="1787541247643" duration="463000" />
       <workItem from="1787541729941" duration="50000" />
       <workItem from="1787541845836" duration="140000" />
-      <workItem from="1787542031871" duration="1869000" />
+      <workItem from="1787542031871" duration="8226000" />
     </task>
     <task id="LOCAL-00001" summary="init setup">
       <option name="closed" value="true" />
@@ -412,7 +415,31 @@
       <option name="project" value="LOCAL" />
       <updated>1787543880868</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="payement service consummer">
+      <option name="closed" value="true" />
+      <created>1787547896051</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1787547896051</updated>
+    </task>
+    <task id="LOCAL-00019" summary="payement service consummer">
+      <option name="closed" value="true" />
+      <created>1787548210431</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1787548210431</updated>
+    </task>
+    <task id="LOCAL-00020" summary="readme udpated">
+      <option name="closed" value="true" />
+      <created>1787549203614</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1787549203614</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -446,7 +473,9 @@
     <MESSAGE value="add kafka in orderservice" />
     <MESSAGE value="serialization of kafka and and productname in orderitem" />
     <MESSAGE value="payement service setup and kafka" />
-    <option name="LAST_COMMIT_MESSAGE" value="payement service setup and kafka" />
+    <MESSAGE value="payement service consummer" />
+    <MESSAGE value="readme udpated" />
+    <option name="LAST_COMMIT_MESSAGE" value="readme udpated" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
