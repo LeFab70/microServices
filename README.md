@@ -1,6 +1,6 @@
 # e-commerce-app2
 
-Projet d'apprentissage : plateforme e-commerce en microservices avec Spring Boot 4 / Spring Cloud.
+Projet  : plateforme e-commerce en microservices avec Spring Boot 4 / Spring Cloud.
 
 ## Architecture
 
